@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue递归侦测对象全部属性原理</title>
+</head>
+<body>
+     <script type="text/javascript">
+         let person = {
+             name:"张三",
+             sex:"男",
+             job:{
+                 a:{
+                     web:"前端"
+                 }
+             }
+         }
+         function  defineReactive(data,key,value = data[key]){
+             // 如果value是对象，递归调用observe来监测该对象
+             // 如果value不是对象，observe函数会直接返回
+             observer(value);//value如果是对象需要继续遍历key进行监控
+             Object.defineProperty(data,key, {
+                 enumerable:true,//可遍历
+                 configurable:true,//可删除
+                 set(newValue){
+                     if (newValue !== value){
+                         value = newValue;
+                         observer(newValue)//如果用户设置的是对象类型需要继续监控
+                         console.log(`${key} 被修改了`)
+                     }
+                 },
+                 get(){
+                     console.log(`${key} 被访问了`)
+                     return value
+                 }
+             })
+         }
+
+
+         function  observer(value){
+
+             if (typeof value != 'object') return
+             Object.keys(value).forEach((key)=>{
+                 defineReactive(value,key)
+             })
+         }
+          observer(person);//检测person所有属性
+     </script>
+</body>
+</html>

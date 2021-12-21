@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vue</title>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+</head>
+<body>
+<div id ="root">
+  <h1>hello {{name}}</h1>
+  <br/>
+  <a v-bind:href="url">跳转</a>
+   <!--简写-->
+  <a  :href="url">跳转1</a>
+</div>
+<script type="text/javascript">
+   /* 初识vue
+    1,想让vue工作,就必须创建上个vue实例,且要传入一配置对象
+    2 root容器里的代码依然符合htm1规范,只不过混入了一些特殊的vue语法
+    3.root容器里的代码被称为【vue模板】
+    4.root 容器和vue实例是一对一的关系
+    5真实开发中只有一个vue实例,并且会配合着组件一起使用
+   6.((xxx}}中的xx要写js表达式,且xx可以自动读取到data中的所有属性
+   7 一但data中的数据发生改变,那么页面中用到该数据的地方也会自动更新;
+
+     */
+
+   /*
+   * vue模板语法有2大类:
+  1 插值语法
+    功能:用于解析标签体内容
+    写法:{{xxx},xxx是js表达式,且可以直接读取到data中的所有属性
+ 2 指令语法
+    功能:用于解析标签(包括:标签属性、标签体内容、绑定事件,)
+    举例:v- bind: href="xxx”或简写为:href="xxx",xxx同样要写js表达式
+    且可以直接读取到data中的所有属性。
+    备注:ue中有很多的指令,且形式都是:v-222,此处我们只是拿v-bind举个例子
+
+   *
+   * */
+    Vue.config.productionTip = false;
+    new Vue({
+        el:"#root",//指定vue挂载的容器，通常为css选择器,
+        data:{
+            name:"Vue",
+            url:"https://www.baidu.com"
+        }
+
+    });
+</script>
+</body>
+</html>

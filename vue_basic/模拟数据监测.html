@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>模拟数据监测</title>
+
+</head>
+<body>
+     <script type="text/javascript">
+         let data = {
+             name:"尚硅谷",
+             address:"北京"
+         }
+
+         //监视data数据的变化
+         const  obs = new Observer(data);
+         console.log(obs);
+         //
+         let vm = {};
+         vm._data=data=obs;
+         function  Observer(obj){
+           //汇总对象的属性形成数组
+             const  keys = Object.keys(obj);
+             keys.forEach((k)=>{
+                 Object.defineProperty(this,k,{
+                     get(){
+                        return obj[k]
+                     },set(val){
+                         console.log("数据被改，需要生成虚拟DOM")
+                         obj[k] = val;
+                     }
+                 })
+             })
+         }
+
+     </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>动画组</title>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+</head>
+<style >
+    h1{
+        background-color: orange;
+    }
+
+    .hello-enter-active{
+        animation: atguigu 0.5s linear;
+    }
+
+    .hello-leave-active{
+        animation: atguigu 0.5s linear reverse;
+    }
+
+    @keyframes atguigu {
+        from{
+            transform: translateX(-100%);
+        }
+        to{
+            transform: translateX(0px);
+        }
+    }
+</style>
+
+<body>
+<div id="root">
+    <button @click="isShow = !isShow">显示/隐藏</button>
+    <transition-group name="hello" appear>
+        <h1 key="1" v-show="isShow">你好啊！</h1>
+        <h1 key="2 " v-show="isShow">vue！</h1>
+    </transition-group>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el:"#root",
+        data() {
+            return {
+                isShow:true
+            }
+        },
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>列表渲染</title>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+</head>
+<body>
+   <div id="root">
+       <h2>人员列表</h2>
+       <ul>
+     <!--      <li :key="person.id" v-for="(person,index) in persons ">
+               {{index}}-{{person.name}}-{{person.age}}
+           </li>-->
+          <!-- <li :key="key" v-for="(value,key) in cars ">
+               {{key}}-{{value}}
+           </li>-->
+           <!--极少使用-->
+        <!--   <li :key="index" v-for="(value,index) in str ">
+               {{index}}-{{value}}
+           </li>-->
+           <!--很少很少使用-->
+           <li :key="number" v-for="(number,index) in 10 ">
+               {{number}}-{{index}}
+           </li>
+       </ul>
+   </div>
+  <script type="text/javascript">
+      new Vue({
+          el:"#root",
+          data:{
+             persons:[
+                 {id:"001",name:"张三",age:25},
+                 {id:"002",name:"李四",age:25},
+                 {id:"003",name:"王五",age:25}
+             ],
+              cars:{
+                  name:"奥迪A8",
+                  price:"70W",
+                  color:"黑色"
+              },
+              str:"hello"
+          }
+      })
+  </script>
+</body>
+</html>

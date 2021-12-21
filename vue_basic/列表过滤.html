@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>列表过滤</title>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+    <h2>人员列表</h2>
+    <label>
+        <input type="text" placeholder="输入关键字查找" v-model="keyword"/>
+    </label>
+    <button @click="sortType =2">年龄升序</button>
+    <button @click="sortType = 1">年龄降序</button>
+    <button @click="sortType = 0">原来顺序</button>
+    <ul>
+      <li :key="person.id" v-for="(person,index) in fillPersons ">
+          {{person.name}}-{{person.age}}-{{person.sex}}
+      </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    //watch实现
+   /* new Vue({
+        el:"#root",
+        data:{
+            persons:[
+                {id:"001",name:"马冬梅",age:15,sex:"女"},
+                {id:"002",name:"周冬雨",age:25,sex:"女"},
+                {id:"003",name:"周杰伦",age:45,sex:"男"},
+                {id:"004",name:"温兆伦",age:26,sex:"男"}
+            ],
+            fillPersons:[],
+            keyword:""
+        },
+        watch:{
+            keyword:{
+                immediate:true,//不改变的情况立即执行一次，注意indexOf 参数为“” 返回的是0
+                handler(newValue){
+                    this.fillPersons = this.persons.filter((p) => {
+                        return p.name.indexOf(newValue) !== -1
+                    });
+                    console.log(this.fillPersons)
+
+                }
+            }
+        }
+    })*/
+    //computed计算属性实现:都能实现的时候优先computed
+    new Vue({
+        el:"#root",
+        data:{
+            persons:[
+                {id:"001",name:"马冬梅",age:15,sex:"女"},
+                {id:"002",name:"周冬雨",age:25,sex:"女"},
+                {id:"003",name:"周杰伦",age:45,sex:"男"},
+                {id:"004",name:"温兆伦",age:26,sex:"男"}
+            ],
+            keyword:"",
+            sortType:0
+        },
+        computed:{
+            fillPersons: function () {
+               const arr = this.persons.filter((p) => {
+                    return p.name.indexOf(this.keyword) !== -1;
+
+                });
+               if (this.sortType){
+                   arr.sort((a,b)=>{
+
+                       return this.sortType === 2 ? a.age - b.age : b.age - a.age;
+                   })
+               }
+               return arr;
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>栈</title>
+</head>
+<body>
+  <script type="text/javascript">
+      //3[abc]  => abcabc
+      //3[2[a]2[b]] => aabbaabbaabb
+      //将2[1[a]3[b]2[3[c]4[d]]]变为 abbbcccddddcccddddabbbcccddddcccdddd
+
+      function  smartRepeat(templateStr){
+          let index = 0;
+          var numStack = [];
+          var strStack = [];
+          var rest = templateStr;
+          while (index < templateStr.length - 1){
+               rest = templateStr.substring(index);
+               if(/^\d+\[/.test(rest)){
+                   const times = Number(rest.match(/^(\d+)\[/)[1]);
+                   numStack.push(times) //捕获数字
+                   strStack.push('');
+                   index += times.toString().length+1;//+1 跳过[
+               }
+               else  if(/^\w+\]/.test(rest)){
+                   let word = rest.match(/^(\w+)\]/)[1];
+                   strStack[strStack.length-1] = word;
+                   index+=word.length
+               }
+               else if (rest[0] === ']') {
+                   let times = numStack.pop();
+                   let word = strStack.pop();
+                   strStack[strStack.length-1] += word.repeat(times);
+                   index ++;
+               }
+
+          }
+          return strStack[0].repeat(numStack[0])
+      }
+      console.log(smartRepeat('2[1[a]3[b]2[3[c]4[d]]]'))
+  </script>
+</body>
+</html>

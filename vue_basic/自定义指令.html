@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <script type="text/javascript" src="./lib/vue.js"></script>
+</head>
+<body>
+<div id="root">
+  <span v-big-number="n"></span>
+  <input type="text" v-fbind="name"/>
+</div>
+<script type="text/javascript">
+
+    //全局指令
+    Vue.directive('my-dir', {
+        //指令与元素成功绑定时会被调用
+        bind(element, binding) {
+            console.log('bind',this)//windows
+            element.value = binding.value;
+        },
+        //元素被插入页面时会被调用
+        inserted(element, binding) {
+            console.log('inserted',this)//windows
+            element.focus();
+        },
+        //指令所在的模板被重新解析时会被调用
+        update(element, binding) {
+            console.log('update',this)//windows
+            element.value = binding.value;
+        }
+    })
+    new Vue({
+        el:"#root",
+        data:{
+          n:100,
+          name:"leo"
+        },
+        directives:{
+            //1 函数形式的调用时机：指令与元素成功绑定时会被调用 2指令所在的模板被重新解析时会被调用
+            'big-number'(element,binding){
+                console.log('big',this)//windows
+                 element.innerText = binding.value * 10;
+            },
+            //对象形式的指令
+            fbind: {
+                //指令与元素成功绑定时会被调用
+                bind(element, binding) {
+                    console.log('bind',this)//windows
+                    element.value = binding.value;
+                },
+                //元素被插入页面时会被调用
+                inserted(element, binding) {
+                    console.log('inserted',this)//windows
+                    element.focus();
+                },
+                //指令所在的模板被重新解析时会被调用
+                update(element, binding) {
+                    console.log('update',this)//windows
+                    element.value = binding.value;
+                }
+            }
+        }
+
+
+    });
+</script>
+</body>
+</html>
